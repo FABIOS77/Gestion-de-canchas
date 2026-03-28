@@ -38,7 +38,7 @@ const showRegister = (req, res) => {
     res.render('auth/register', { error: null });
 };
 
-db.sequelize.sync({ force: true }).then(async () => {
+db.sequelize.sync({ force: false }).then(async () => {
     console.log("Base de datos sincronizada.");
     
     const adminCount = await db.Usuario.count({ where: { rol: 'admin' } });
