@@ -1,0 +1,26 @@
+<%- include('../../components/header') %>
+<h2 class="mb-4 text-center">Nuestras Canchas</h2>
+
+<div class="row">
+    <% if (canchas.length === 0) { %>
+        <div class="alert alert-info text-center">No hay canchas activas en este momento.</div>
+    <% } %>
+
+    <% canchas.forEach(cancha => { %>
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h4 class="card-title text-primary"><%= cancha.nombre %></h4>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    <%= cancha.TipoCancha ? cancha.TipoCancha.nombre : 'General' %>
+                </h6>
+                <p class="card-text mt-3">
+                    <span class="fs-5 fw-bold">$<%= cancha.precio_por_hora %></span> / hora
+                </p>
+                <a href="#" class="btn btn-success w-100">Ver Disponibilidad</a>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+</div>
+<%- include('../../components/footer') %>

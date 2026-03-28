@@ -1,0 +1,40 @@
+<%- include('../../components/header') %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Gestión de Canchas</h2>
+    <a href="/admin/canchas/create" class="btn btn-success">Nueva Cancha</a>
+</div>
+
+<table class="table table-bordered table-striped text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Precio/Hora</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% canchas.forEach(cancha => { %>
+        <tr>
+            <td><%= cancha.id %></td>
+            <td><%= cancha.nombre %></td>
+            <td><%= cancha.TipoCancha ? cancha.TipoCancha.nombre : 'Sin asignar' %></td>
+            <td>$<%= cancha.precio_por_hora %></td>
+            <td>
+                <span class="badge <%= cancha.estado === 'activa' ? 'bg-success' : 'bg-danger' %>">
+                    <%= cancha.estado %>
+                </span>
+            </td>
+            <td>
+                <a href="/admin/canchas/edit/<%= cancha.id %>" class="btn btn-warning btn-sm">Editar</a>
+                <form action="/admin/canchas/delete/<%= cancha.id %>" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar esta cancha?');">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+<%- include('../../components/footer') %>
