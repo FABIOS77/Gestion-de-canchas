@@ -1,0 +1,42 @@
+<%- include('../../components/header') %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Gestión de Horarios</h2>
+    <a href="/admin/horarios/create" class="btn btn-success">Agregar Horario</a>
+</div>
+
+<table class="table table-bordered table-striped text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>Cancha</th>
+            <th>Fecha</th>
+            <th>Hora Inicio</th>
+            <th>Hora Fin</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (horarios.length === 0) { %>
+            <tr><td colspan="6">No hay horarios registrados.</td></tr>
+        <% } %>
+        <% horarios.forEach(horario => { %>
+        <tr>
+            <td><%= horario.Cancha ? horario.Cancha.nombre : 'N/A' %></td>
+            <td><%= horario.fecha %></td>
+            <td><%= horario.hora_inicio %></td>
+            <td><%= horario.hora_fin %></td>
+            <td>
+                <span class="badge <%= horario.disponible ? 'bg-success' : 'bg-warning text-dark' %>">
+                    <%= horario.disponible ? 'Disponible' : 'Reservado' %>
+                </span>
+            </td>
+            <td>
+                <form action="/admin/horarios/delete/<%= horario.id %>" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar este horario?');">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+<%- include('../../components/footer') %>

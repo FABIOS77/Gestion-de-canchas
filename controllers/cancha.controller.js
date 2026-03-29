@@ -1,7 +1,7 @@
 const db = require('../models');
 
 const listar = async (req, res) => {
-    // Incluimos el TipoCancha para poder mostrar su nombre en la tabla
+
     const canchas = await db.Cancha.findAll({ include: db.TipoCancha });
     res.render('admin/canchas/list', { canchas, usuario: req.session.usuario });
 };
@@ -12,7 +12,6 @@ const mostrarFormulario = async (req, res) => {
     if (id) {
         cancha = await db.Cancha.findByPk(id);
     }
-    // Necesitamos pasar los tipos de cancha para el <select>
     const tipos = await db.TipoCancha.findAll();
     res.render('admin/canchas/form', { cancha, tipos, usuario: req.session.usuario });
 };

@@ -9,10 +9,10 @@ const authRoutes = require('./routes/auth.routes');
 const tipoCanchaRoutes = require('./routes/tipoCancha.routes');
 const canchaRoutes = require('./routes/cancha.routes');
 const clienteRoutes = require('./routes/cliente.routes');
+const horarioRoutes = require('./routes/horario.routes');
 
 app.set('view engine', 'ejs');
 
-// Middlewares globales
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
     secret: 'secreto_admin_123',
@@ -21,10 +21,14 @@ app.use(session({
 }));
 
 app.use('/auth', authRoutes);
-app.use('/auth', authRoutes);
 app.use('/admin/tipos', tipoCanchaRoutes);
 app.use('/admin/canchas', canchaRoutes);
+app.use('/admin/horarios', horarioRoutes);
 app.use('/cliente', clienteRoutes);
+
+
+
+
 
 app.get('/', (req, res) => {
     res.redirect('/auth/login');
