@@ -1,0 +1,45 @@
+<%- include('../../components/header') %>
+<div class="card shadow col-md-6 mx-auto mt-4">
+    <div class="card-body">
+        <h3>Agregar Horario Disponible</h3>
+        <%- include('../../components/alert') %>
+        <form action="/admin/horarios/create" method="POST">
+            <div class="mb-3">
+                <label>Seleccionar Cancha</label>
+                <select name="cancha_id" class="form-select" required>
+                    <option value="" disabled selected>Elija una cancha...</option>
+                    <% canchas.forEach(cancha => { %>
+                        <option value="<%= cancha.id %>"><%= cancha.nombre %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label>Fecha</label>
+                <input type="date" name="fecha" id="fechaInput" class="form-control" required>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Hora de Inicio</label>
+                    <input type="time" name="hora_inicio" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Hora de Fin</label>
+                    <input type="time" name="hora_fin" class="form-control" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Crear Horario</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputFecha = document.getElementById('fechaInput');
+        const hoy = new Date();
+        const hoyLocal = new Date(hoy.getTime() - (hoy.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
+        
+        inputFecha.setAttribute('min', hoyLocal);
+    });
+</script>
+
+<%- include('../../components/footer') %>

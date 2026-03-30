@@ -1,0 +1,42 @@
+<%- include('../../components/header') %>
+<div class="card shadow col-md-6 mx-auto mt-4">
+    <div class="card-body">
+        <h3><%= cancha ? 'Editar' : 'Crear' %> Cancha</h3>
+        <form action="/admin/canchas/save" method="POST">
+            <input type="hidden" name="id" value="<%= cancha ? cancha.id : '' %>">
+            
+            <div class="mb-3">
+                <label>Nombre de la Cancha</label>
+                <input type="text" name="nombre" class="form-control" value="<%= cancha ? cancha.nombre : '' %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Tipo de Cancha</label>
+                <select name="tipo_id" class="form-select" required>
+                    <option value="" disabled <%= !cancha ? 'selected' : '' %>>Seleccione un tipo...</option>
+                    <% tipos.forEach(tipo => { %>
+                        <option value="<%= tipo.id %>" <%= cancha && cancha.tipo_id === tipo.id ? 'selected' : '' %>>
+                            <%= tipo.nombre %>
+                        </option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Precio por Hora ($)</label>
+                <input type="number" step="0.01" name="precio_por_hora" class="form-control" value="<%= cancha ? cancha.precio_por_hora : '' %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Estado</label>
+                <select name="estado" class="form-select">
+                    <option value="activa" <%= cancha && cancha.estado === 'activa' ? 'selected' : '' %>>Activa</option>
+                    <option value="inactiva" <%= cancha && cancha.estado === 'inactiva' ? 'selected' : '' %>>Inactiva</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Guardar Cancha</button>
+        </form>
+    </div>
+</div>
+<%- include('../../components/footer') %>

@@ -1,0 +1,54 @@
+<%- include('../../components/header') %>
+
+<h2 class="mb-4">Mis Reservas</h2>
+
+<div class="row">
+    <% if (reservas.length === 0) { %>
+        <div class="alert alert-info">Aún no tienes reservas realizadas.</div>
+    <% } else { %>
+        <% 
+            // Calculamos la fecha de hoy para saber si una reserva ya pasó
+            const hoy = new Date();
+            const hoyString = new Date(hoy.getTime() - (hoy.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
+        %>
+        
+        <% reservas.forEach(reserva => { %>
+            <div class="col-md-6 mb-3">
+                <div class="card shadow-sm border-<%= reserva.estado === 'confirmada' ? 'success' : 'danger' %>">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title text-primary mb-0"><%= reserva.Horario.Cancha.nombre %></h5>
+                            <span class="badge bg-<%= reserva.estado === 'confirmada' ? 'success' : 'danger' %>">
+                                <%= reserva.estado.toUpperCase() %>
+                            </span>
+                        </div>
+                        <p class="card-text mb-1">
+                            <strong>Fecha:</strong> <%= reserva.Horario.fecha %>
+                        </p>
+                        <p class="card-text mb-3">
+                            <strong>Horario:</strong> <%= reserva.Horario.hora_inicio %> - <%= reserva.Horario.hora_fin %>
+                        </p>
+                        
+                        <div class="d-flex justify-content-between">
+                            <% if (reserva.estado === 'confirmada') { %>
+                                <% if (reserva.Horario.fecha >= hoyString) { %>
+                                    <form action="/cliente/reservar/cancelar/<%= reserva.id %>" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas cancelar esta reserva?');">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Cancelar Reserva</button>
+                                    </form>
+                                <% } else { %>
+                                    <a href="/cliente/reservas/resena/<%= reserva.id %>" class="btn btn-warning btn-sm">Dejar Reseña</a>
+                                <% } %>
+                            <% } else { %>
+                               
+                                <span class="text-muted small">Reserva cancelada</span>
+                            <% } %>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    <% } %>
+</div>
+
+<%- include('../../components/footer') %>

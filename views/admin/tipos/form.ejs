@@ -1,0 +1,15 @@
+<%- include('../../components/header') %>
+<div class="card shadow col-md-6 mx-auto mt-4">
+    <div class="card-body">
+        <h3><%= tipo ? 'Editar' : 'Crear' %> Tipo de Cancha</h3>
+        <form action="/admin/tipos/save" method="POST">
+            <input type="hidden" name="id" value="<%= tipo ? tipo.id : '' %>">
+            <div class="mb-3">
+                <label>Nombre del Tipo (Ej: Fútbol 5, Tenis)</label>
+                <input type="text" name="nombre" class="form-control" value="<%= tipo ? tipo.nombre : '' %>" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Guardar</button>
+        </form>
+    </div>
+</div>
+<%- include('../../components/footer') %>
