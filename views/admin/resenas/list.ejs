@@ -1,0 +1,29 @@
+<%- include('../../components/header') %>
+<h2 class="mb-4">Reseñas de Canchas</h2>
+
+<table class="table table-bordered table-striped text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>Cancha</th>
+            <th>Calificación</th>
+            <th>Comentario</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (resenas.length === 0) { %>
+            <tr><td colspan="4">No hay reseñas registradas.</td></tr>
+        <% } %>
+        <% resenas.forEach(resena => { %>
+        <tr>
+            <td><%= resena.Cancha.nombre %></td>
+            <td>
+                <% for(let i = 0; i < resena.calificacion; i++) { %>⭐<% } %>
+            </td>
+            <td><%= resena.comentario %></td>
+            <td><%= resena.createdAt.toISOString().split('T')[0] %></td>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+<%- include('../../components/footer') %>

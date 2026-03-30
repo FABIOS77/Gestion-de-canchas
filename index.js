@@ -10,6 +10,7 @@ const tipoCanchaRoutes = require('./routes/tipoCancha.routes');
 const canchaRoutes = require('./routes/cancha.routes');
 const clienteRoutes = require('./routes/cliente.routes');
 const horarioRoutes = require('./routes/horario.routes');
+const reservaRoutes = require('./routes/reserva.routes');
 
 app.set('view engine', 'ejs');
 
@@ -25,6 +26,7 @@ app.use('/admin/tipos', tipoCanchaRoutes);
 app.use('/admin/canchas', canchaRoutes);
 app.use('/admin/horarios', horarioRoutes);
 app.use('/cliente', clienteRoutes);
+app.use('/admin/reservas', reservaRoutes);
 
 
 

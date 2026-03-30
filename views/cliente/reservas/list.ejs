@@ -31,7 +31,7 @@
                         
                         <div class="d-flex justify-content-between">
                             <% if (reserva.estado === 'confirmada') { %>
-                                <% if (reserva.Horario.fecha >= hoyString) { %>
+                                <% if (reserva.Horario.fecha > hoyString) { %>
                                     <form action="/cliente/reservar/cancelar/<%= reserva.id %>" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas cancelar esta reserva?');">
                                         <button type="submit" class="btn btn-outline-danger btn-sm">Cancelar Reserva</button>
                                     </form>

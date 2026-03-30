@@ -1,0 +1,43 @@
+<%- include('../../components/header') %>
+<h2 class="mb-4">Todas las Reservas</h2>
+
+<table class="table table-bordered table-striped text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>Cliente</th>
+            <th>Cancha</th>
+            <th>Fecha</th>
+            <th>Horario</th>
+            <th>Estado</th>
+            <th>Cambiar Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (reservas.length === 0) { %>
+            <tr><td colspan="6">No hay reservas registradas.</td></tr>
+        <% } %>
+        <% reservas.forEach(reserva => { %>
+        <tr>
+            <td><%= reserva.Usuario.nombre %></td>
+            <td><%= reserva.Horario.Cancha.nombre %></td>
+            <td><%= reserva.Horario.fecha %></td>
+            <td><%= reserva.Horario.hora_inicio %> - <%= reserva.Horario.hora_fin %></td>
+            <td>
+                <span class="badge <%= reserva.estado === 'confirmada' ? 'bg-success' : 'bg-danger' %>">
+                    <%= reserva.estado.toUpperCase() %>
+                </span>
+            </td>
+            <td>
+                <form action="/admin/reservas/cambiar-estado/<%= reserva.id %>" method="POST" class="d-flex gap-2 justify-content-center">
+                    <select name="estado" class="form-select form-select-sm w-auto">
+                        <option value="confirmada" <%= reserva.estado === 'confirmada' ? 'selected' : '' %>>Confirmada</option>
+                        <option value="cancelada" <%= reserva.estado === 'cancelada' ? 'selected' : '' %>>Cancelada</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+<%- include('../../components/footer') %>
