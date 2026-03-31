@@ -32,14 +32,6 @@ app.get('/', (req, res) => {
     res.redirect('/auth/login');
 });
 
-const showRegister = (req, res) => {
-    if (req.session.usuario) {
-        if (req.session.usuario.rol === 'admin') return res.redirect('/admin/canchas');
-        return res.redirect('/cliente/canchas');
-    }
-    res.render('auth/register', { error: null });
-};
-
 db.sequelize.sync({ force: false }).then(async () => {
     console.log("Base de datos sincronizada.");
     
