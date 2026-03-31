@@ -28,10 +28,6 @@ app.use('/admin/horarios', horarioRoutes);
 app.use('/cliente', clienteRoutes);
 app.use('/admin/reservas', reservaRoutes);
 
-
-
-
-
 app.get('/', (req, res) => {
     res.redirect('/auth/login');
 });

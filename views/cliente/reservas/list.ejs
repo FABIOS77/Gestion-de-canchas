@@ -7,7 +7,6 @@
         <div class="alert alert-info">Aún no tienes reservas realizadas.</div>
     <% } else { %>
         <% 
-            // Calculamos la fecha de hoy para saber si una reserva ya pasó
             const hoy = new Date();
             const hoyString = new Date(hoy.getTime() - (hoy.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
         %>

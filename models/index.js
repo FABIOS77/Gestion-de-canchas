@@ -7,7 +7,6 @@ const Horario = require('./horario.model')(sequelize);
 const Reserva = require('./reserva.model')(sequelize);
 const Resena = require('./resena.model')(sequelize);
 
-// --- RELACIONES ---
 TipoCancha.hasMany(Cancha, { foreignKey: 'tipo_id' });
 Cancha.belongsTo(TipoCancha, { foreignKey: 'tipo_id' });
 
