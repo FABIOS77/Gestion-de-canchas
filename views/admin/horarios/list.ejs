@@ -18,25 +18,41 @@
     <tbody>
         <% if (horarios.length === 0) { %>
             <tr><td colspan="6">No hay horarios registrados.</td></tr>
+
+        <% } else { %>
+            <% 
+                const hoy = new Date();
+                const hoyString = new Date(hoy.getTime() - (hoy.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
+            %>
+            
+            <% horarios.forEach(horario => { %>
+            <tr>
+                <td><%= horario.Cancha ? horario.Cancha.nombre : 'N/A' %></td>
+                <td><%= horario.fecha %></td>
+                <td><%= horario.hora_inicio %></td>
+                <td><%= horario.hora_fin %></td>
+                <td>
+                    <% if (horario.fecha < hoyString) { %>
+                        <% if (!horario.disponible) { %>
+                            <span class="badge bg-secondary">Completado</span>
+                        <% } else { %>
+                            <span class="badge bg-danger">Expirado (No reservado)</span>
+                        <% } %>
+                    <% } else { %>        
+                        <span class="badge <%= horario.disponible ? 'bg-success' : 'bg-warning text-dark' %>">
+                            <%= horario.disponible ? 'Disponible' : 'Reservado' %>
+                        </span>
+                    <% } %>
+                </td>
+                <td>
+                    <form action="/admin/horarios/delete/<%= horario.id %>" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar este horario?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
         <% } %>
-        <% horarios.forEach(horario => { %>
-        <tr>
-            <td><%= horario.Cancha ? horario.Cancha.nombre : 'N/A' %></td>
-            <td><%= horario.fecha %></td>
-            <td><%= horario.hora_inicio %></td>
-            <td><%= horario.hora_fin %></td>
-            <td>
-                <span class="badge <%= horario.disponible ? 'bg-success' : 'bg-warning text-dark' %>">
-                    <%= horario.disponible ? 'Disponible' : 'Reservado' %>
-                </span>
-            </td>
-            <td>
-                <form action="/admin/horarios/delete/<%= horario.id %>" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar este horario?');">
-                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                </form>
-            </td>
-        </tr>
-        <% }) %>
+
     </tbody>
 </table>
 <%- include('../../components/footer') %>
