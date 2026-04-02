@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -15,8 +16,9 @@ const reservaRoutes = require('./routes/reserva.routes');
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(session({
-    secret: 'secreto_admin_123',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }));
@@ -34,17 +36,15 @@ app.get('/', (req, res) => {
 
 db.sequelize.sync({ force: false }).then(async () => {
     console.log("Base de datos sincronizada.");
-    
     const adminCount = await db.Usuario.count({ where: { rol: 'admin' } });
     if (adminCount === 0) {
-        const hashedPassword = await bcrypt.hash('admin123', 10);
+        const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
         await db.Usuario.create({
             nombre: 'Administrador General',
-            email: 'admin@sistema.com',
+            email: process.env.ADMIN_EMAIL,
             contraseña: hashedPassword,
             rol: 'admin'
         });
-        console.log("Admin creado: admin@sistema.com / admin123");
     }
 
     app.listen(port, () => {
